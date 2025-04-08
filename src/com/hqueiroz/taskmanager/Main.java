@@ -10,6 +10,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
+import java.io.FileWriter;
+
 public class Main {
 
     static TaskManager taskManager = new TaskManager();
@@ -28,6 +30,8 @@ public class Main {
 
             if (choice != 0)
                 handleChoice(choice);
+
+            saveTasks();
         }
     }
 
@@ -81,7 +85,7 @@ public class Main {
                 String taskTitle = scanner.nextLine();
 
                 if(taskManager.markDone(taskTitle))
-                    System.out.println("\""+taskTitle+"\"pi marked as Done");
+                    System.out.println("\""+taskTitle+"\" marked as Done");
                 else
                     System.out.println("Task not found.");
 
@@ -107,8 +111,10 @@ public class Main {
             }
 
             case 5: {
-                System.out.println("Goodbye.");
                 scanner.close();
+                saveTasks();
+                System.out.println("All Tasks Saved in tasks.txt");
+                System.out.println("Goodbye.");
                 System.exit(0);
                 break;
             }
@@ -129,6 +135,18 @@ public class Main {
         } catch (FileNotFoundException e) {
             System.out.println("No saved tasks");
         } catch (IOException e) {
+            System.out.println("Something went wrong.");
+        }
+    }
+
+    static void saveTasks(){
+        try(FileWriter writer = new FileWriter("tasks.txt")){
+            String[] taskList = taskManager.returnTasksInLines();
+            for(String taskLine : taskList)
+                writer.write(taskLine);
+        }catch(FileNotFoundException e){
+            System.out.println("Could not locate file location");
+        }catch(IOException e){
             System.out.println("Something went wrong.");
         }
     }

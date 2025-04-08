@@ -22,6 +22,15 @@ public class Task {
             public String toString(){
                 return "Outdated";
             }
+        };
+
+        public String toSave() {
+            return switch(this){
+                case DONE -> "DONE";
+                case NOT_DONE -> "NOT_DONE";
+                case OUTDATED -> "OUTDATED";
+                default -> "";
+            };
         }
     }
 

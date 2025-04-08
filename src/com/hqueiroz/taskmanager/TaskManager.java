@@ -63,4 +63,17 @@ public class TaskManager {
                 taskList.remove(task);
         }
     }
+
+    public String[] returnTasksInLines(){
+        String[] tasksInString = new String[taskList.size()];
+        int i = 0;
+        for(Task task : taskList){
+            String line = task.getTitle()+";"+task.getDescription()+";"+task.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))+";"+task.getStatus().toSave();
+            if(i+1 < taskList.size())
+                line += '\n';
+            tasksInString[i++] = line;
+        }
+
+        return tasksInString;
+    }
 }
