@@ -38,6 +38,16 @@ public class Task {
             this.status = Status.OUTDATED;
     }
 
+    Task(String title, String description, LocalDateTime dueDate, Task.Status status){
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        if(dueDate.isBefore(LocalDateTime.now()))
+            this.status = Status.OUTDATED;
+        else
+            this.status = status;
+    }
+
     public String getTitle(){
         return this.title;
     }

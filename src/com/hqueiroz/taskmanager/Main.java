@@ -5,12 +5,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+
 public class Main {
 
     static TaskManager taskManager = new TaskManager();
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+
+        loadTasks();
 
         while(true) {
             System.out.println("\nWelcome to my Task Manager CLI Program");
@@ -107,6 +114,22 @@ public class Main {
             }
 
             default:
+        }
+    }
+
+    static void loadTasks(){
+        try(BufferedReader reader = new BufferedReader(new FileReader("tasks.txt"))){
+
+            String line;
+            while((line = reader.readLine()) != null){
+                String[] itens = line.split(";");
+                taskManager.addTask(new Task(itens[0], itens[1], LocalDateTime.parse(itens[2], DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")), Task.Status.valueOf(itens[3])));
+            }
+            System.out.println("Tasks loaded");
+        } catch (FileNotFoundException e) {
+            System.out.println("No saved tasks");
+        } catch (IOException e) {
+            System.out.println("Something went wrong.");
         }
     }
 }
