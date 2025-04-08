@@ -20,7 +20,7 @@ public class TaskManager {
                 System.out.println("\t- " + task.getTitle());
                 System.out.println("\t\tDescription: " + task.getDescription());
                 System.out.println("\t\tDue Date: " + task.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
-                if(task.getStatus() == Task.Status.NOT_DONE && task.getDueDate().isBefore(LocalDateTime.now()))
+                if(task.getStatus() == Task.Status.PENDING && task.getDueDate().isBefore(LocalDateTime.now()))
                     task.setStatus(Task.Status.OUTDATED);
                 System.out.println("\t\tStatus: " + task.getStatus());
                 System.out.println();

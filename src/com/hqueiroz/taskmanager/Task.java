@@ -11,10 +11,10 @@ public class Task {
                 return "Done";
             }
         },
-        NOT_DONE{
+        PENDING{
             @Override
             public String toString(){
-                return "Not Done";
+                return "Pending";
             }
         },
         OUTDATED{
@@ -27,7 +27,7 @@ public class Task {
         public String toSave() {
             return switch(this){
                 case DONE -> "DONE";
-                case NOT_DONE -> "NOT_DONE";
+                case PENDING -> "PENDING";
                 case OUTDATED -> "OUTDATED";
                 default -> "";
             };
@@ -37,7 +37,7 @@ public class Task {
     private final String title;
     private final String description;
     private final LocalDateTime dueDate;
-    private Status status = Status.NOT_DONE;
+    private Status status = Status.PENDING;
 
     Task(String title, String description, LocalDateTime dueDate){
         this.title = title;
